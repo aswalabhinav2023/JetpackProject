@@ -1,55 +1,54 @@
 package com.example.jetpackhomework
-
 import android.os.Bundle
-import android.view.Surface
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.PointerIcon.Companion.Text
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.jetpackhomework.ui.theme.JetpackHomeworkTheme
-import org.w3c.dom.Text
-
-private val MaterialTheme.colorScheme: Any
-    get() {
-        TODO("Not yet implemented")
-    }
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             JetpackHomeworkTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme
-                ) {
-                    Greeting("Android")
-                }
+
+
+                BookTrackerApp()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    org.w3c.dom.Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+private fun BookTrackerApp(){
+    val navController = rememberNavController()
+    NavHost(navController, startDestination = ""){
+        composable(route = "books"){
+            BookScreen(){ id ->
+                navController.navigate("books/$id")
+            }
+        }
+
+        composable(
+                route = "books/{book_id}",
+                arguments = listOf(navArgument("book_id"){
+                    type = NavType.IntType
+                })
+            ){
+            BookDetailsScreen()
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun DefaultPreview() {
     JetpackHomeworkTheme {
-        Greeting("Android")
+        BookScreen()
     }
 }

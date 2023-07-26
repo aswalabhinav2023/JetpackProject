@@ -44,14 +44,14 @@ class BookTrackerViewModel(private val stateHandle: SavedStateHandle): ViewModel
         }
     }
 
-    private fun List<Book>.restoreFinishedField(): List<Book> {
+    private suspend fun getRemoteBooks(): List<Book>{
         return withContext(Dispatchers.IO){
             api.getBooks()
         }
     }
 
     private fun List<Book>.restoreFinishedField(): List<Book> {
-        stateHandle.get<List<Int>?>?>("finished")?.let {selectedIds ->
+        stateHandle.get<List<Int>?>("finished")?.let {selectedIds ->
             val booksMap =this.associateBy { it.id }
             selectedIds.forEach { id ->
                 booksMap[id]?.finished = true
