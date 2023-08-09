@@ -27,7 +27,7 @@ fun BookDetailsScreen(){
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize().padding(16.dp)
         ) {
-        val icon = if(book.finished) Icons.Default.Check else Icons.Default.Clear
+            val icon = if(book.finished) Icons.Default.Check else Icons.Default.Clear
 
         FinishedIcon(
             icon = icon,
@@ -37,10 +37,9 @@ fun BookDetailsScreen(){
         BookDetails(
             author = book.author,
             title = book.title,
-            modifier = Modifier.padding(bottom = 32.dp),
+            modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         )
-
         AdditionalDetails(
             genre = book.genre,
             series = book.series

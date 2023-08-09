@@ -1,4 +1,5 @@
 package com.example.jetpackhomework
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,10 +16,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            JetpackHomeworkTheme {
+            BookTrackerTheme {
 
-
-                BookTrackerApp()
             }
         }
     }
@@ -27,9 +26,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun BookTrackerApp(){
     val navController = rememberNavController()
-    NavHost(navController, startDestination = ""){
+    NavHost(navController, startDestination = "books"){
         composable(route = "books"){
-            BookScreen(){ id ->
+            BookScreen(){id ->
                 navController.navigate("books/$id")
             }
         }
@@ -44,6 +43,7 @@ private fun BookTrackerApp(){
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
