@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class BookDetailsViewModel(private val stateHandle: SavedStateHandle) : ViewModel() {
     private var api: BooksApi
+    private var booksDao = BooksDb.getDaoInstance(BookApplication.getAppContext())
     val state = mutableStateOf<Book?>(null)
     private val errorHandler = CoroutineExceptionHandler{_, e ->
         e.printStackTrace()
@@ -31,6 +32,16 @@ class BookDetailsViewModel(private val stateHandle: SavedStateHandle) : ViewMode
         getBook(id)
     }
 
+
+    private suspend fun refreshCache(id: Int){
+        val remoteBook = getRemoteBook(id)
+        val bookFinished = booksDao.getBook(id).finished
+        booksDao.add(remoteBook)
+        if(bookFinished){
+            val partialBook = PartialBook_finished(id, true)
+            booksDao.update(partialBook)
+        }
+    }
     private fun getBook(id: Int){
         viewModelScope.launch(errorHandler){
             val book = getRemoteBook(id)

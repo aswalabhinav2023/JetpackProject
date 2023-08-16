@@ -22,11 +22,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun BookScreen(onItemClick: (id: Int) -> Unit = {}){
-    val viewModel: BookTrackerViewModel = viewModel()
+    val viewModel: BooksViewModel = viewModel()
 
     LazyColumn(
         contentPadding = PaddingValues(
